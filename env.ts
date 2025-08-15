@@ -70,12 +70,12 @@ try {
 } catch (error) {
   if (error instanceof z.ZodError) {
     console.error('❌ Invalid environment variables:')
-    console.error(JSON.stringify(error.flatten().fieldErrors, null, 2))
+    console.error(JSON.stringify(error.format(), null, 2))
 
     // More detailed error messages
-    error.errors.forEach((err) => {
-      const path = err.path.join('.')
-      console.error(`  ${path}: ${err.message}`)
+    error.issues.forEach((issue) => {
+      const path = issue.path.join('.')
+      console.error(`  ${path}: ${issue.message}`)
     })
 
     process.exit(1)
